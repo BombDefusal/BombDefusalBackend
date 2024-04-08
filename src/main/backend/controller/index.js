@@ -1,5 +1,5 @@
 const controller = {}
 
-//controller.user = require('./user');
+controller.leaderboard = require('./leaderboard');
 
 module.exports = controller;
