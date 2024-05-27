@@ -10,6 +10,8 @@ const leaderboardSchema = new mongoose.Schema({
         type: String,
         required: true,
     }
+}, {
+    freezeTableName: true
 });
 
 const Leaderboard = mongoose.model('Leaderboard', leaderboardSchema);
