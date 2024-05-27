@@ -51,10 +51,7 @@ app.get('/leaderboard', async (req, res) => {
     }
 });
 
-mongoose.connect('mongodb://172.31.29.151/bombdefusal', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect('mongodb://172.31.29.151/bombdefusal')
     .then(() => console.log('Connection to MongoDB established successfully.'))
     .catch(err => console.error('Error connecting to MongoDB:', err));
 
