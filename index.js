@@ -51,7 +51,7 @@ app.get('/leaderboard', async (req, res) => {
     }
 });
 
-mongoose.connect('mongodb://localhost:27017/bombdefusal', {
+mongoose.connect('mongodb://172.31.29.151/bombdefusal', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
