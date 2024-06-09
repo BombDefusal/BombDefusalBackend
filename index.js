@@ -32,12 +32,13 @@ const Leaderboard = require('./src/main/backend/model/leaderboard');
 const ActiveUser = require('./src/main/backend/model/activeUser');
 
 app.post('/leaderboard', async (req, res) => {
+    const { dispositive, time } = req.body;
     try {
         await Leaderboard.create({
-            dispositive: req.body.dispositive,
-            time: req.body.time
+            dispositive: dispositive,
+            time: time
         });
-        const deletedUser = ActiveUser.find({})
+        const deletedUser = ActiveUser.find({dispositive: dispositive})
         if (!deletedUser) {
             return res.status(404).json({ error: 'User not found' });
         }
