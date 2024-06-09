@@ -29,7 +29,7 @@ app.use('/leaderboard', leaderboards);
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
 const Leaderboard = require('./src/main/backend/model/leaderboard');
-const { log } = require('console');
+const ActiveUser = require('./src/main/backend/model/activeUser');
 
 app.post('/leaderboard', async (req, res) => {
     try {
@@ -45,12 +45,13 @@ app.post('/leaderboard', async (req, res) => {
 });
 
 app.post('/startgame', async (req, res) => {
-    const dispositive = req.body.dispositive
     try {
-        client.publish('/startgame', dispositive) 
-        return res.json("Game started");
-    }
-    catch (error) {
+        await ActiveUser.create({
+            dispositive: req.body.dispositive
+        });
+        return res.json("Active user created successfully");
+    } catch (error) {
+        console.error(error);
         return res.status(400).json(error);
     }
 })
