@@ -29,6 +29,7 @@ app.use('/leaderboard', leaderboards);
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
 const Leaderboard = require('./src/main/backend/model/leaderboard');
+const { log } = require('console');
 
 app.post('/leaderboard', async (req, res) => {
     try {
@@ -45,11 +46,12 @@ app.post('/leaderboard', async (req, res) => {
 
 app.post('/startgame', async (req, res) => {
     const dispositive = req.body.dispositive
+    console.log(dispositive)
     try {
-        client.publish('/startgame', dispositive) 
+        return res.json("User created successfully");
     }
     catch (error) {
-        return res.status(500).json({ message: "Internal server error" });
+        return res.status(400).json(error);
     }
 })
 
