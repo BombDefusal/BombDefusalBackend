@@ -13,8 +13,4 @@ client.on("connect", () => {
   console.log("Connected to MQTT Broker");
 });
 
-client.on("message", async (topic, message) => {
-  handleMessage(topic, message);
-});
-
 module.exports = client;
