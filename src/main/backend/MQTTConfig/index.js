@@ -1,6 +1,5 @@
-import mqtt, { MqttClient } from "mqtt";
-import { handleMessage } from "./messageHandlers";
-import dotenv from "dotenv";
+const mqtt = require("mqtt")
+const dotenv = require("dotenv");
 
 dotenv.config();
 const urlBrokerMqtt = 'mqtt://100.28.74.43';
@@ -18,4 +17,4 @@ client.on("message", async (topic, message) => {
   handleMessage(topic, message);
 });
 
-export default client;
+module.exports = client;
