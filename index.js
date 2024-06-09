@@ -55,6 +55,16 @@ app.post('/leaderboard', async (req, res) => {
     }
   });
 
+  app.get('/leaderboard', async (req, res) => {
+    try {
+        const data = await Leaderboard.find({});
+        return res.json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 app.post('/startgame', async (req, res) => {
     try {
         await ActiveUser.create({
@@ -67,10 +77,9 @@ app.post('/startgame', async (req, res) => {
     }
 })
 
-
-app.get('/leaderboard', async (req, res) => {
+app.get('/startgame', async (req, res) => {
     try {
-        const data = await Leaderboard.find({});
+        const data = await ActiveUser.find({});
         return res.json(data);
     } catch (error) {
         console.error(error);
