@@ -37,6 +37,11 @@ app.post('/leaderboard', async (req, res) => {
             dispositive: req.body.dispositive,
             time: req.body.time
         });
+        const deletedUser = ActiveUser.find({})
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        await deletedUser.destroy()
         return res.json("User created successfully");
     } catch (error) {
         console.error(error);
