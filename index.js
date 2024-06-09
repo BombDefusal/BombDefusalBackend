@@ -1,3 +1,4 @@
+const client = require('./src/main/backend/MQTTConfig/index')
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -41,6 +42,17 @@ app.post('/leaderboard', async (req, res) => {
         return res.status(400).json(error);
     }
 });
+
+app.post('/startgame', async (req, res) => {
+    const dispositive = req.body.dispositive
+    try {
+        client.publish('/startgame', dispositive) 
+    }
+    catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+})
+
 
 app.get('/leaderboard', async (req, res) => {
     try {
