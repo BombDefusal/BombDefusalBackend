@@ -45,25 +45,15 @@ app.post('/leaderboard', async (req, res) => {
 });
 
 app.post('/startgame', async (req, res) => {
-    const dispositive = req.body.dispositive;
-    console.log(dispositive);
-  
-    // Publish dispositive data to MQTT broker
+    const dispositive = req.body.dispositive
     try {
-      client.publish('topic/dispositive', dispositive, { qos: 1 }, (error) => { // Specify topic and QoS
-        if (error) {
-          console.error('Error publishing to MQTT:', error);
-          return res.status(500).json({ message: 'Internal server error' });
-        } else {
-          console.log('Dispositive published to MQTT broker:', dispositive);
-          return res.json({ message: 'Dispositive received' });
-        }
-      });
-    } catch (error) {
-      console.error('Error publishing to MQTT:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+        client.publish('/startgame', dispositive) 
+        return res.json("Game started");
     }
-  });
+    catch (error) {
+        return res.status(400).json(error);
+    }
+})
 
 
 app.get('/leaderboard', async (req, res) => {
