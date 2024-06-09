@@ -33,22 +33,27 @@ const ActiveUser = require('./src/main/backend/model/activeUser');
 
 app.post('/leaderboard', async (req, res) => {
     const { dispositive, time } = req.body;
+  
     try {
-        await Leaderboard.create({
-            dispositive: dispositive,
-            time: time
-        });
-        const deletedUser = ActiveUser.find({dispositive: dispositive})
-        if (!deletedUser) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-        await deletedUser.destroy()
-        return res.json("User created successfully");
+      await Leaderboard.create({
+        dispositive,
+        time,
+      });
+
+      const userToDelete = await ActiveUser.findOneAndDelete({ dispositive });
+  
+      if (userToDelete) {
+        console.log(`User with dispositive '${dispositive}' removed from ActiveUser`);
+      } else {
+        console.log(`User with dispositive '${dispositive}' not found in ActiveUser`);
+      }
+  
+      return res.json({ message: "User created successfully and removed from ActiveUser (if found)" });
     } catch (error) {
-        console.error(error);
-        return res.status(400).json(error);
+      console.error(error);
+      return res.status(400).json({ message: "Error creating user or removing from ActiveUser" });
     }
-});
+  });
 
 app.post('/startgame', async (req, res) => {
     try {
