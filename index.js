@@ -46,9 +46,9 @@ app.post('/leaderboard', async (req, res) => {
 
 app.post('/startgame', async (req, res) => {
     const dispositive = req.body.dispositive
-    console.log(dispositive)
     try {
-        return res.json("User created successfully");
+        client.publish('/startgame', dispositive) 
+        return res.json("Game started");
     }
     catch (error) {
         return res.status(400).json(error);
